@@ -189,4 +189,34 @@ export class RatesService {
       maximumFractionDigits: val < 10 ? 4 : 2
     }).format(val);
   }
+
+  // Call serverless /api/exchangerates endpoint
+  static async fetchMasRates(endOfDay?: string, customKeyId?: string): Promise<{ success: boolean; rates?: Record<string, any>; message?: string }> {
+    try {
+      const url = endOfDay ? `/api/exchangerates?end_of_day=${encodeURIComponent(endOfDay)}` : '/api/exchangerates';
+      const headers: Record<string, string> = {
+        'Accept': 'application/json'
+      };
+      if (customKeyId) {
+        headers['KeyId'] = customKeyId;
+      }
+
+      const res = await fetch(url, { headers });
+      const data = await res.json();
+      return data;
+    } catch (err: any) {
+      return { success: false, message: err?.message || 'Network error contacting /api/exchangerates' };
+    }
+  }
+
+  // Call serverless /api/health endpoint
+  static async checkHealth(): Promise<{ status: string; masGateway?: { keyConfigured: boolean } }> {
+    try {
+      const res = await fetch('/api/health');
+      return await res.json();
+    } catch {
+      return { status: 'offline' };
+    }
+  }
 }
+

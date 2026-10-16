@@ -8,6 +8,7 @@ import { RatesTable } from './components/RatesTable';
 import { HistoricalChart } from './components/HistoricalChart';
 import { TravelCard } from './components/TravelCard';
 import { MasApiModal } from './components/MasApiModal';
+import { BottomNav } from './components/BottomNav';
 import { 
   Building2, 
   ExternalLink, 
@@ -120,10 +121,10 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8 pb-24 md:pb-10">
         {/* TAB 1: Converter & Calculator View */}
         {activeTab === 'converter' && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Currency Converter Card */}
             <Calculator
               currencies={currencies}
@@ -139,15 +140,15 @@ export default function App() {
 
             {/* Quick Rates Overview Matrix Below Calculator */}
             <div className="pt-2">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-slate-900 tracking-tight">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">
                   Popular Singapore Dollar Rates
                 </h3>
                 <button
                   onClick={() => setActiveTab('table')}
-                  className="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1 transition-colors cursor-pointer"
+                  className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1 transition-colors cursor-pointer"
                 >
-                  <span>View All 25+ Currencies</span>
+                  <span>All Currencies</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
@@ -192,24 +193,31 @@ export default function App() {
         onSaveConfig={setMasConfig}
       />
 
+      {/* Mobile Phone Bottom Navigation Bar */}
+      <BottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onOpenMasModal={() => setIsMasModalOpen(true)}
+      />
+
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 mt-16 py-8">
+      <footer className="bg-white border-t border-slate-200 mt-12 sm:mt-16 py-6 sm:py-8 pb-20 md:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500 text-center sm:text-left">
+            <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
               <span className="font-bold text-slate-900">SingaRate</span>
               <span>·</span>
-              <span>Singapore Dollar (SGD) Foreign Exchange & Currency Tool</span>
+              <span>Singapore Dollar (SGD) FX Tool</span>
               <span>·</span>
-              <span className="text-slate-400">MAS Statistical API Compatible</span>
+              <span className="text-slate-400">MAS End-of-Day Daily Views Compatible</span>
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsMasModalOpen(true)}
-                className="hover:text-red-600 transition-colors cursor-pointer"
+                className="hover:text-red-600 font-semibold transition-colors cursor-pointer"
               >
-                Configure MAS API Keys
+                MAS API Keys
               </button>
               <a
                 href="https://eservices.mas.gov.sg/statistics/api/"
@@ -217,14 +225,14 @@ export default function App() {
                 rel="noreferrer"
                 className="hover:text-slate-900 flex items-center gap-1 transition-colors"
               >
-                <span>Monetary Authority of Singapore (MAS)</span>
+                <span>MAS Portal</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           </div>
 
-          <div className="mt-4 pt-4 border-t border-slate-100 text-[11px] text-slate-400 text-center sm:text-left">
-            Disclaimer: Rates provided are for informational and planning purposes. Brunei Dollar (BND) parity governed by the 1967 Currency Interchangeability Agreement. For transactional banking rates, verify with your authorized financial institution or licensed money changer.
+          <div className="mt-3 pt-3 border-t border-slate-100 text-[10px] sm:text-[11px] text-slate-400 text-center sm:text-left">
+            Disclaimer: Rates provided are for informational and planning purposes. Brunei Dollar (BND) parity governed by the 1967 Currency Interchangeability Agreement.
           </div>
         </div>
       </footer>
